@@ -24,12 +24,12 @@ understand the syntax of the language pl.
 |#
 
 
-(: plSuffixContained : (Listof String) -> (U String #f))
+(: plSuffixContained : (Listof String) -> Boolean)
 
 (define(plSuffixContained lists)
   (cond [(null? lists) #f]
         [(<= (string-length (first lists)) 1) (plSuffixContained(rest lists))]
-        [(equal? (substring (first lists) (- (string-length (first lists)) 2)) "pl") (first lists)]
+        [(equal? (substring (first lists) (- (string-length (first lists)) 2)) "pl") #t]
         [else (plSuffixContained(rest lists))]))
 
 #|
@@ -38,11 +38,11 @@ I added tests to the function to check an extreme case.
 
 (test (plSuffixContained '("pllp" "plyy" "ppp" "lpTT" "lol")) => false)
 (test (plSuffixContained '()) => false)
-(test (plSuffixContained '("pl")) => "pl")
-(test (plSuffixContained '("plllpl" "plyy" "ppp" "lpTT" "lol")) => "plllpl")
-(test (plSuffixContained '("pllp" "pllyypl" "ppp" "lpTT" "lol")) => "pllyypl")
-(test (plSuffixContained '("pllp" "plyy" "ppp" "lpTT" "plopl")) => "plopl")
-(test (plSuffixContained '("pt" "l" "l" "pl")) => "pl")
+(test (plSuffixContained '("pl")) => true)
+(test (plSuffixContained '("plllpl" "plyy" "ppp" "lpTT" "lol")) => true)
+(test (plSuffixContained '("pllp" "pllyypl" "ppp" "lpTT" "lol")) => true)
+(test (plSuffixContained '("pllp" "plyy" "ppp" "lpTT" "plopl")) => true)
+(test (plSuffixContained '("pt" "l" "l" "pl")) => true)
 
 
 
